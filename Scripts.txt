@@ -1,0 +1,301 @@
+﻿create table carreras (
+id serial primary key,
+nombre varchar (100) not null,
+semestre int not null,
+modalidad varchar (100) not null
+);
+
+create table alumnos (
+id serial primary key, --autoincrementable 
+nombre varchar (100) not null,
+correo varchar (150) unique,
+edad int
+);
+
+alter table alumnos
+add column carrera_id int;
+
+
+alter table alumnos
+add constraint fk_alumno_carrera
+foreign key (carrera_id)
+references carreras(id);
+
+select * from alumnos
+select * from carreras
+
+create table carreras (
+id serial primary key,
+nombre varchar (100) not null,
+semestre int not null,
+modalidad varchar (100) not null
+);
+
+create table alumnos (
+id serial primary key, --autoincrementable 
+nombre varchar (100) not null,
+correo varchar (150) unique,
+edad int
+);
+
+alter table alumnos
+add column carrera_id int;
+
+
+alter table alumnos
+add constraint fk_alumno_carrera
+foreign key (carrera_id)
+references carreras(id);
+
+select * from alumnos
+select * from carreras
+
+
+# Facultad
+CREATE TABLE facultades (
+    id_facultad SERIAL PRIMARY KEY,
+    nombre VARCHAR(150) NOT NULL,
+    codigo VARCHAR(10) UNIQUE NOT NULL,
+    decano VARCHAR(100),
+    telefono VARCHAR(20)
+);
+
+select * from facultades
+
+DROP TABLE IF EXISTS carreras CASCADE;
+
+CREATE TABLE carreras (
+    id_carrera SERIAL PRIMARY KEY,
+    id_facultad INT NOT NULL,
+    nombre VARCHAR(150) NOT NULL,
+    codigo VARCHAR(10) UNIQUE NOT NULL,
+    duracion_semestres INT NOT NULL,
+    estado VARCHAR(20) DEFAULT 'ACTIVA',
+
+    CONSTRAINT fk_carrera_facultad
+    FOREIGN KEY (id_facultad)
+    REFERENCES facultades(id_facultad)
+);
+
+INSERT INTO facultades (nombre, codigo, decano, telefono) 
+VALUES ('Facultad de IngenierÃ­a', 'FI-01', 'Dr. PÃ©rez', '555-1234');
+
+INSERT INTO carreras (id_facultad, nombre, codigo, duracion_semestres) 
+VALUES (1, 'IngenierÃ­a en Sistemas', 'IS-101', 9);
+
+
+
+SELECT 
+    c.id_carrera,
+    c.nombre AS carrera,
+    c.codigo AS codigo_carrera,
+    c.duracion_semestres,
+    f.nombre AS facultad,
+    f.codigo AS codigo_facultad
+FROM carreras c
+INNER JOIN facultades f 
+    ON c.id_facultad = f.id_facultad;
+
+DROP TABLE IF exists alumnos CASCADE;
+
+CREATE TABLE estudiantes (
+    id_estudiante SERIAL PRIMARY KEY,
+    matricula VARCHAR(20) UNIQUE NOT NULL,
+    nombre VARCHAR(100) NOT NULL,
+    apellido VARCHAR(100) NOT NULL,
+    email VARCHAR(100) UNIQUE,
+    telefono VARCHAR(20),
+    fecha_nacimiento DATE,
+    id_carrera INT NOT NULL,
+    fecha_ingreso DATE DEFAULT CURRENT_DATE,
+    estado VARCHAR(20) DEFAULT 'ACTIVO',
+
+    CONSTRAINT fk_estudiante_carrera
+        FOREIGN KEY (id_carrera)
+        REFERENCES carreras(id_carrera)
+);
+
+select * from estudiantes 
+
+
+INSERT INTO estudiantes (matricula, nombre, apellido, email, id_carrera) VALUES 
+('2026001', 'Ana', 'LÃ³pez', 'ana@email.com', 1),
+('2026002', 'Carlos', 'GÃ³mez', 'carlos@email.com', 1),
+('2026003', 'MarÃ­a', 'Mireles', 'maria@email.com', 1),
+('2026004', 'Pedro', 'SÃ¡nchez', 'pedro@email.com', 1);
+
+
+SELECT 
+    e.matricula,
+    e.nombre,
+    e.apellido,
+    e.email,
+    c.nombre AS carrera
+FROM estudiantes e
+INNER JOIN carreras c 
+    ON e.id_carrera = c.id_carrera;
+
+
+create table carreras (
+id serial primary key,
+nombre varchar (100) not null,
+semestre int not null,
+modalidad varchar (100) not null
+);
+
+create table alumnos (
+id serial primary key, --autoincrementable 
+nombre varchar (100) not null,
+correo varchar (150) unique,
+edad int
+);
+
+alter table alumnos
+add column carrera_id int;
+
+
+alter table alumnos
+add constraint fk_alumno_carrera
+foreign key (carrera_id)
+references carreras(id);
+
+select * from alumnos
+select * from carreras
+
+
+# Facultad
+CREATE TABLE facultades (
+    id_facultad SERIAL PRIMARY KEY,
+    nombre VARCHAR(150) NOT NULL,
+    codigo VARCHAR(10) UNIQUE NOT NULL,
+    decano VARCHAR(100),
+    telefono VARCHAR(20)
+);
+
+select * from facultades
+
+DROP TABLE IF EXISTS carreras CASCADE;
+
+CREATE TABLE carreras (
+    id_carrera SERIAL PRIMARY KEY,
+    id_facultad INT NOT NULL,
+    nombre VARCHAR(150) NOT NULL,
+    codigo VARCHAR(10) UNIQUE NOT NULL,
+    duracion_semestres INT NOT NULL,
+    estado VARCHAR(20) DEFAULT 'ACTIVA',
+
+    CONSTRAINT fk_carrera_facultad
+    FOREIGN KEY (id_facultad)
+    REFERENCES facultades(id_facultad)
+);
+
+INSERT INTO facultades (nombre, codigo, decano, telefono) 
+VALUES ('Facultad de IngenierÃ­a', 'FI-01', 'Dr. PÃ©rez', '555-1234');
+
+INSERT INTO carreras (id_facultad, nombre, codigo, duracion_semestres) 
+VALUES (1, 'IngenierÃ­a en Sistemas', 'IS-101', 9);
+
+SELECT 
+    c.id_carrera,
+    c.nombre AS carrera,
+    c.codigo AS codigo_carrera,
+    c.duracion_semestres,
+    f.nombre AS facultad,
+    f.codigo AS codigo_facultad
+FROM carreras c
+INNER JOIN facultades f 
+    ON c.id_facultad = f.id_facultad;
+
+create table carreras (
+id serial primary key,
+nombre varchar (100) not null,
+semestre int not null,
+modalidad varchar (100) not null
+);
+
+create table alumnos (
+id serial primary key, --autoincrementable 
+nombre varchar (100) not null,
+correo varchar (150) unique,
+edad int
+);
+
+
+alter table alumnos
+add column carrera_id int;
+
+alter table alumnos 
+add column materias varchar(150);
+
+alter table alumnos
+add constraint fk_alumno_carrera
+foreign key (carrera_id)
+references carreras(id);
+
+select * from alumnos;
+select * from carreras;
+
+INSERT INTO carreras (nombre, semestre, modalidad) VALUES
+('Software', 8, 'Presencial'),
+('Inteligencia Artificial', 8, 'Presencial');
+
+INSERT INTO alumnos (nombre, correo, edad, carrera_id, materias) VALUES
+('Ana', 'ana@email.com', 20, 1, 'Base de Datos, ProgramaciÃ³n Web'),
+('Carlos', 'carlos@email.com', 21, 1, 'MatemÃ¡ticas, Base de Datos'),
+('MarÃ­a', 'maria@email.com', 22, 2, 'ProgramaciÃ³n Web, MatemÃ¡ticas'),
+('Pedro', 'pedro@email.com', 20, 1, 'Redes, Base de Datos');
+
+SELECT * 
+FROM alumnos 
+WHERE materias ILIKE '%Base de Datos%';
+create table carreras (
+id serial primary key,
+nombre varchar (100) not null,
+semestre int not null,
+modalidad varchar (100) not null
+);
+
+create table alumnos (
+id serial primary key, --autoincrementable 
+nombre varchar (100) not null,
+correo varchar (150) unique,
+edad int
+);
+
+alter table alumnos
+add column carrera_id int;
+
+
+alter table alumnos
+add constraint fk_alumno_carrera
+foreign key (carrera_id)
+references carreras(id);
+
+select * from alumnos
+select * from carreras
+
+# Facultad
+CREATE TABLE facultades (
+    id_facultad SERIAL PRIMARY KEY,
+    nombre VARCHAR(150) NOT NULL,
+    codigo VARCHAR(10) UNIQUE NOT NULL,
+    decano VARCHAR(100),
+    telefono VARCHAR(20)
+);
+
+DROP TABLE IF EXISTS carreras CASCADE;
+
+CREATE TABLE carreras (
+    id_carrera SERIAL PRIMARY KEY,
+    id_facultad INT NOT NULL,
+    nombre VARCHAR(150) NOT NULL,
+    codigo VARCHAR(10) UNIQUE NOT NULL,
+    duracion_semestres INT NOT NULL,
+    estado VARCHAR(20) DEFAULT 'ACTIVA',
+
+    CONSTRAINT fk_carrera_facultad
+        FOREIGN KEY (id_facultad)
+        REFERENCES facultades(id_facultad)
+);
+
+
